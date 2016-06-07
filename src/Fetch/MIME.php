@@ -32,6 +32,18 @@ final class MIME
             return null;
         }
 
+        /**
+         * Decodes filename given in the content-disposition header according
+         * to RFC5987, such as filename*=utf-8''filename.png. Note that the
+         * language sub-component is defined in RFC5646, and that the filename
+         * is URL encoded (in the charset specified)
+         *
+         * @link https://github.com/osTicket/osTicket-1.7/pull/738
+         */
+        if (preg_match("/([\w!#$%&+^_`{}~-]+)'([\w-]*)'(.*)$/", $text, $match)) {
+            return iconv($match[1], $targetCharset . '//IGNORE', urldecode($match[3]));
+        }
+
         $result = '';
 
         foreach (imap_mime_header_decode($text) as $word) {

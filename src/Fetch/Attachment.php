@@ -92,7 +92,9 @@ class Attachment
 
         $parameters = Message::getParametersFromStructure($structure);
 
-        if (isset($parameters['filename'])) {
+        if (isset($parameters['filename*'])) {
+            $this->setFileName($parameters['filename*']);
+        } elseif (isset($parameters['filename'])) {
             $this->setFileName($parameters['filename']);
         } elseif (isset($parameters['name'])) {
             $this->setFileName($parameters['name']);
