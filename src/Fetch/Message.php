@@ -545,7 +545,7 @@ class Message
                 }
             }
 
-            if (strtolower($structure->subtype) === 'plain' || ($structure->type == 1 && strtolower($structure->subtype) !== 'alternative'&& strtolower($structure->subtype) !== 'related'
+            if (strtolower($structure->subtype) === 'plain' || ($structure->type == 1 && strtolower($structure->subtype) !== 'alternative' && strtolower($structure->subtype) !== 'related'
 )) {
                 if (isset($this->plaintextMessage)) {
                     $this->plaintextMessage .= PHP_EOL . PHP_EOL;
