@@ -41,7 +41,8 @@ final class MIME
          * @link https://github.com/osTicket/osTicket-1.7/pull/738
          */
         if (preg_match("/([\w!#$%&+^_`{}~-]+)'([\w-]*)'(.*)$/", $text, $match)) {
-            return iconv($match[1], $targetCharset . '//IGNORE', urldecode($match[3]));
+            $sourceCharset = str_replace('iso-8859-8-i', 'iso-8859-8', $match[1]);
+            return iconv($sourceCharset, $targetCharset . '//IGNORE', urldecode($match[3]));
         }
 
         $result = '';
@@ -53,7 +54,7 @@ final class MIME
             } else if ($word->charset === 'x-unknown') {
                 $ch = 'utf-8';
             } else {
-                $ch = $word->charset;
+                $ch = $sourceCharset = str_replace('iso-8859-8-i', 'iso-8859-8', $word->charset);
             }
 
             $result .= iconv($ch, $targetCharset . '//IGNORE', $word->text);
